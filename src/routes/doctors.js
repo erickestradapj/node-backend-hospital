@@ -11,7 +11,7 @@ const { validateFields } = require('../middlewares/validator-fields');
 
 const router = Router();
 
-router.get('/', getDoctors);
+router.get('/', validateJWT, getDoctors);
 
 router.post(
    '/',
