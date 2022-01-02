@@ -37,11 +37,38 @@ const createDoctor = async (req = request, res = response) => {
    });
 };
 
-const updateDoctor = (req = request, res = response) => {
-   res.json({
-      ok: true,
-      msg: 'Update Doctor',
-   });
+const updateDoctor = async (req = request, res = response) => {
+   const id = req.params.id;
+   const uid = req.uid;
+
+   try {
+      const doctor = await Doctor.findById(id);
+
+      if (!doctor) {
+         return res.status(404).json({
+            ok: true,
+            msg: 'Doctor not found by id',
+         });
+      }
+
+      const changesDoctor = {
+         ...req.body,
+         user: uid,
+      };
+
+      const doctorUpdated = await Doctor.findByIdAndUpdate(id, changesDoctor, { new: true });
+
+      res.json({
+         ok: true,
+         doctor: doctorUpdated,
+      });
+   } catch (error) {
+      console.log(error);
+      res.status(500).json({
+         ok: false,
+         msg: 'Unexpected error... check logs',
+      });
+   }
 };
 
 const deleteDoctor = (req = request, res = response) => {
