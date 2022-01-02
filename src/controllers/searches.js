@@ -1,7 +1,7 @@
 const { request, response } = require('express');
 const User = require('../models/users');
-const Hospital = require('../models/hospitals');
 const Doctor = require('../models/doctors');
+const Hospital = require('../models/hospitals');
 
 const getTodo = async (req = request, res = response) => {
    const { search } = req.params;
@@ -22,7 +22,8 @@ const getTodo = async (req = request, res = response) => {
 };
 
 const getDocumentCollection = async (req = request, res = response) => {
-   const { search, table } = req.params;
+   const table = req.params.table;
+   const search = req.params.search;
    const regex = new RegExp(search, 'i');
 
    let data = [];
@@ -30,8 +31,8 @@ const getDocumentCollection = async (req = request, res = response) => {
    switch (table) {
       case 'doctors':
          data = await Doctor.find({ name: regex })
-            .populate('hospital', 'name img')
-            .populate('user', 'name img');
+            .populate('user', 'name img')
+            .populate('hospital', 'name img');
          break;
 
       case 'hospitals':

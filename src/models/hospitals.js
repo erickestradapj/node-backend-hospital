@@ -9,16 +9,16 @@ const HospitalSchema = Schema({
       type: String,
    },
    user: {
+      required: true,
       type: Schema.Types.ObjectId,
       ref: 'User',
-      required: true,
    },
 });
 
 HospitalSchema.methods.toJSON = function () {
-   const { __v, ...hospital } = this.toObject();
+   const { __v, ...object } = this.toObject();
 
-   return hospital;
+   return object;
 };
 
 module.exports = model('Hospital', HospitalSchema);
