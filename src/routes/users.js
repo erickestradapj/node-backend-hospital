@@ -27,6 +27,7 @@ router.post(
 router.put(
    '/:id',
    [
+      validateJWT,
       check('name', 'name is required').not().isEmpty(),
       check('email', 'email is required').isEmail(),
       check('role', 'role is required').not().isEmpty(),
@@ -35,6 +36,6 @@ router.put(
    updateUser
 );
 
-router.delete('/:id', deleteUser);
+router.delete('/:id', validateJWT, deleteUser);
 
 module.exports = router;
