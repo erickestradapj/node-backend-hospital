@@ -94,9 +94,20 @@ const renewToken = async (req, res = response) => {
    // Generate TOKEN - JWT
    const token = await generateJWT(uid);
 
+   // Get user by uid
+   const user = await User.findById(uid);
+
+   if (!user) {
+      return res.status(404).json({
+         ok: false,
+         msg: 'Email not found',
+      });
+   }
+
    res.json({
       ok: true,
       token,
+      user,
    });
 };
 
