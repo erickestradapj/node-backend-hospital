@@ -30,11 +30,6 @@ const createDoctor = async (req = request, res = response) => {
          msg: 'Unexpected error... check logs',
       });
    }
-
-   res.json({
-      ok: true,
-      msg: 'Create Doctor',
-   });
 };
 
 const updateDoctor = async (req = request, res = response) => {
